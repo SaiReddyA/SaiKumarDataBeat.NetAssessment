@@ -1,0 +1,42 @@
+--============ if exist=============
+--IF EXISTS (
+--    SELECT 1
+--    FROM sysobjects
+--    WHERE xtype = 'U' -- U stands for user-defined table
+--    AND name = 'Tages'
+--)
+--BEGIN
+--   CREATE TABLE Tages(
+--   Id INT PRIMARY KEY IDENTITY(1,1),
+--   ItemName VARCHAR(50),
+--   ItemTag VARCHAR(50))
+--END
+--SELECT * FROM Tages
+--INSERT INTO TAGES VALUES('itemA','red,large,new'),('itemB','blue,small'),
+--('itemC','green,medium,used')
+--SELECT 
+--    Id,
+--    ItemName,
+--    value AS split_itemtag
+--FROM Tages
+--CROSS APPLY STRING_SPLIT(ItemTag, ',') AS tags
+--SELECT 
+--    Id,
+--    itemName,
+--    LTRIM(RTRIM(value)) AS cleaned_tag
+--FROM Tages
+--CROSS APPLY STRING_SPLIT(itemTag, ',') AS tags
+--SELECT 
+--    Id,
+--    itemName,
+--    STUFF((
+--        SELECT ',' + LTRIM(RTRIM(value))
+--        FROM Tages AS t2
+--        CROSS APPLY STRING_SPLIT(t2.itemTag, ',') AS tags
+--        WHERE t1.Id = t2.Id
+--        FOR XML PATH(''), TYPE).value('.', 'NVARCHAR(MAX)'), 1, 1, '') AS concatenated_tags
+--FROM Tages AS t1
+--GROUP BY Id, itemName
+
+
+
